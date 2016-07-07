@@ -5,14 +5,14 @@
 
 int main(void)
 {
-    const char phrase[] = "an example message abcdefghijklmnopqrstuvwxyz";
+    // phrase to translate
+    const char phrase[] = "ab cdefz";
 
     // set pin 5 of PORTB for output
     DDRB |= _BV(DDB5);
 
     // used for morse code translation
     morse_code codes[] = {
-        {{-1, -1, -1, -1},  0, ' '},
         {{0, 1, -1, -1},    2, 'a'},
         {{1, 0, 0, 0},      4, 'b'},
         {{1, 0, 1, 0},      4, 'c'},
@@ -43,14 +43,20 @@ int main(void)
 
     for(;;) {
         uint8_t i;
+        //translate every letter
         for(i = 0; i < sizeof(phrase) - 1; i++) {
             uint8_t j;
-            for(j = 0; j < (sizeof(codes) / sizeof(morse_code)); j++) {
-                if(codes[j].letter == tolower(phrase[i])) {
-                    morse_converter(codes[j].list, codes[j].count);
-                    
-                    break;
-                }
+
+            // use ASCII for index
+            char letter = tolower(phrase[i]);
+            
+            // if the current letter is a space
+            if(letter == 32) {
+                delay_ms(SPACE_DELAY);
+            } else if(letter >= 97 && letter <= 122
+                    && codes[letter - 97].letter == letter) {
+                // otherwise translate letter
+                morse_converter(codes[letter - 97].list, codes[letter - 97].count);
             }
             delay_ms(NEXT_DELAY);
         }
@@ -58,6 +64,7 @@ int main(void)
     }
 }
 
+// output morse code to pin
 void morse_converter(uint8_t list[], uint8_t size) {
     uint8_t i;
     for(i = 0; i < size; i++) {
@@ -69,7 +76,7 @@ void morse_converter(uint8_t list[], uint8_t size) {
     }
 }
 
-// Morse code dot
+// morse code dot
 void morse_dot(void) {
     PORTB |= _BV(PORTB5);
     delay_ms(DOT_DELAY);
@@ -78,7 +85,7 @@ void morse_dot(void) {
     delay_ms(CHAR_PAUSE_DELAY);
 }
 
-// Morse code dash
+// morse code dash
 void morse_dash(void) {
     PORTB |= _BV(PORTB5);
     delay_ms(DASH_DELAY);
@@ -87,7 +94,7 @@ void morse_dash(void) {
     delay_ms(CHAR_PAUSE_DELAY);
 }
 
-// Delay by count ms
+// delay by count ms
 void delay_ms(uint16_t count) {
     while(count--) {
         _delay_ms(1);
