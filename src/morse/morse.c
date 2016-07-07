@@ -66,10 +66,8 @@ int main(void)
                     morse_converter(codes[j].list, codes[j].count);
                 }
             }
-
             delay_ms(NEXT_DELAY);
         }
-
         delay_ms(FINISHED_DELAY);
     }
 }
