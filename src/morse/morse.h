@@ -13,13 +13,13 @@
 
 // hold translation info
 typedef struct morse_code {
-        uint8_t list[4];
-            uint8_t count;
-                char letter;
+        const uint8_t list[4];
+        uint8_t count;
+        char letter;
 } morse_code;
 
 // definitions
-void morse_converter(uint8_t list[], uint8_t size);
+void morse_converter(const uint8_t list[], uint8_t size);
 void morse_dot(void);
 void morse_dash(void);
 void delay_ms(uint16_t count);

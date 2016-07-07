@@ -12,7 +12,7 @@ int main(void)
     DDRB |= _BV(DDB5);
 
     // used for morse code translation
-    morse_code codes[] = {
+    const morse_code codes[] = {
         {{0, 1, -1, -1},    2, 'a'},
         {{1, 0, 0, 0},      4, 'b'},
         {{1, 0, 1, 0},      4, 'c'},
@@ -65,7 +65,7 @@ int main(void)
 }
 
 // output morse code to pin
-void morse_converter(uint8_t list[], uint8_t size) {
+void morse_converter(const uint8_t list[], uint8_t size) {
     uint8_t i;
     for(i = 0; i < size; i++) {
         if(list[i] == 0) {
