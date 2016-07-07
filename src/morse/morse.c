@@ -64,6 +64,8 @@ int main(void)
             for(j = 0; j < (sizeof(codes) / sizeof(morse_code)); j++) {
                 if(codes[j].letter == tolower(phrase[i])) {
                     morse_converter(codes[j].list, codes[j].count);
+                    
+                    break;
                 }
             }
             delay_ms(NEXT_DELAY);
