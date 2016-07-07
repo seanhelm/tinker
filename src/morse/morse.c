@@ -21,7 +21,7 @@ void delay_ms(uint16_t count);
 
 int main(void)
 {
-    const char phrase[] = "youre hot";
+    const char phrase[] = "an example message abcdefghijklmnopqrstuvwxyz";
 
     // set pin 5 of PORTB for output
     DDRB |= _BV(DDB5);
